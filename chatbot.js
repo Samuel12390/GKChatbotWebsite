@@ -1,28 +1,19 @@
-//links
-//http://eloquentjavascript.net/09_regexp.html
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-
 
 var messages = [], //array that hold the record of each string in chat
   lastUserMessage = "", //keeps track of the most recent input string from the user
   botMessage = "", //var keeps track of what the chatbot is going to say
   botName = 'Chatbot', //name of the chatbot
   talking = true; //when false the speach function doesn't work
-//
-//
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//edit this function to change what the chatbot says
-//
-//
+
+
 function chatbotResponse() {
-  talking = true;
+
+  talking = false;
   botMessage = "I'm confused"; //the default message
+
+  // Randomize a sassy comment from Roodle
+  // for every kind of question that is entered (who, what, where when, why, how)
+  // or an identifier (?)
 
   if (lastUserMessage === 'hi' || lastUserMessage =='hello') {
     const hi = ['hi','howdy','hello']
@@ -33,16 +24,21 @@ function chatbotResponse() {
     botMessage = 'My name is ' + botName;
   }
 }
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//****************************************************************
-//
-//
-//
+
+var b;
+function getanswer(q){
+$.get("https://api.duckduckgo.com/?q="+q+"&format=json", function(a) {
+b = JSON.parse(a);
+if(b.Abstract=="") {
+  $( "#answer" ).addClass( "hiding");
+  document.getElementById('answer').innerHTML='<p>No Results Found :(</p>'
+}
+  else{
+     $( "#answer" ).removeClass( "hiding");document.getElementById("answer").innerHTML="<h1>"+b.Heading+"</h1><img src='"+b.Image+"' class='imagey' width='100'><br><p>"+b.Abstract+"</p>";
+      }
+});
+} 
+
 //this runs each time enter is pressed.
 //It controls the overall input and output
 function newEntry() {
@@ -54,7 +50,6 @@ function newEntry() {
     document.getElementById("chatbox").value = "";
     //adds the value of the chatbox to the array messages
     messages.push(lastUserMessage);
-    //Speech(lastUserMessage);  //says what the user typed outloud
     //sets the variable botMessage in response to lastUserMessage
     chatbotResponse();
     //add the chatbot's name and message to the array messages
@@ -70,17 +65,9 @@ function newEntry() {
 }
 
 //text to Speech
-//https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API
 function Speech(say) {
   if ('speechSynthesis' in window && talking) {
     var utterance = new SpeechSynthesisUtterance(say);
-    //msg.voice = voices[10]; // Note: some voices don't support altering params
-    //msg.voiceURI = 'native';
-    //utterance.volume = 1; // 0 to 1
-    //utterance.rate = 0.1; // 0.1 to 10
-    //utterance.pitch = 1; //0 to 2
-    //utterance.text = 'Hello World';
-    //utterance.lang = 'en-US';
     speechSynthesis.speak(utterance);
   }
 }
@@ -97,11 +84,10 @@ function keyPress(e) {
   }
   if (key == 38) {
     console.log('hi')
-      //document.getElementById("chatbox").value = lastUserMessage;
   }
 }
 
-//clears the placeholder text ion the chatbox
+//clears the placeholder text in the chatbox
 //this function is set to run when the users brings focus to the chatbox, by clicking on it
 function placeHolder() {
   document.getElementById("chatbox").placeholder = "";
