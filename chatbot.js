@@ -1,12 +1,10 @@
-//links
-//http://eloquentjavascript.net/09_regexp.html
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 
 var messages = [], //array that hold the record of each string in chat
   lastUserMessage = "", //keeps track of the most recent input string from the user
   botMessage = "", //var keeps track of what the chatbot is going to say
   botName = 'Roodle', //name of the chatbot
   talking = true; //when false the speach function doesn't work
+
 
   // a few common conversation topics as regular expressions to help guide chatbot converstions
   let howFeel = /how (are)? you|what('s)? up|wassup/;
@@ -34,10 +32,14 @@ function chatbotResponse() {
   // connects to api by default
   if (lastUserMessage.charAt(0) != "*") {
     botMessage = chooseInsult();
+    getanswer(lastUserMessage);
+
     //getanswer(lastUserMessage);
   }
   // control statements guide the conversation in a simple way if the program sees an * as the first char 
   else {  
+
+    getanswer("");
     if (rude.test(lastUserMessage.toLowerCase())) {
       const soWhat = ["Have you looked at my name?", "I'm not required to be nice to you.", 
                       "And? What's your point?", "oH i'M sOrRy (sarcasm).", "You're in the wrong place if you're looking for a friend."];
@@ -50,7 +52,7 @@ function chatbotResponse() {
     }
     
     if (nameRe.test(lastUserMessage.toLowerCase())) {
-      botMessage = 'My name is ' + botName;
+      botMessage = 'My name is ' + botName + '. And your name is dumb';
     }
     
     if (greetings.test(lastUserMessage.toLowerCase()) || lastUserMessage === "hi" ||lastUserMessage === "yo") {      
@@ -112,41 +114,38 @@ function chatbotResponse() {
 
     if (family.test(lastUserMessage.toLowerCase())) {
       const famResp = ["I am a solo computer program. Being alone suits me.", "I have family in high places. You heard of Google? That's my cousin.",
-                        "My family is more successful than yours will ever be.", "I guess you could say Duck Duck Go is my frien- I mean partner."];
+                        "My family is more successful than yours will ever be.", "I guess you could say Duck Duck Go is my friend... I mean partner."];
       botMessage = famResp[Math.floor(Math.random()*(famResp.length))];
     }
 
   }
-
-  
 }
 
-/*var b;
+var b;
 function getanswer(q){
-  $.get("https://api.duckduckgo.com/?q="+q+"&format=json", function(a) {
-  b = JSON.parse(a);
-  if(b.Abstract=="") {
-    $( "#answer" ).addClass( "hiding");
-    document.getElementById('answer').innerHTML='<p>No Results Found :(</p>'
-  }
+$.get("https://api.duckduckgo.com/?q="+q+"&format=json", function(a) {
+b = JSON.parse(a);
+if(b.Abstract == "") {
+  $( "#answer" ).addClass( "hiding");
+  document.getElementById('answer').innerHTML='<p>That doesnt make any sense. Stop trying! >:(</p>'
+}
   else{
-     $( "#answer" ).removeClass( "hiding");document.getElementById("answer").innerHTML="<h1>"+b.Heading+"</h1><img src='"+b.Image+"' class='imagey' width='100'><br><p>"+b.Abstract+"</p>";
-    }
-  });
-} */
+     $( "#answer" ).removeClass( "hiding");document.getElementById("answer").innerHTML="<h1><center>"+b.Heading+"</h1></center><p>"+b.Abstract+"</p>";
+      }
+});
+} 
 
 //this runs each time enter is pressed.
 //It controls the overall input and output
 function newEntry() {
   //if the message from the user isn't empty then run 
-  if (document.getElementById("chatbox").value != "") {
+  if (document.getElementById("qurybox").value != "") {
     //pulls the value from the chatbox ands sets it to lastUserMessage
-    lastUserMessage = document.getElementById("chatbox").value;
+    lastUserMessage = document.getElementById("qurybox").value;
     //sets the chat box to be clear
-    document.getElementById("chatbox").value = "";
+    document.getElementById("qurybox").value = "";
     //adds the value of the chatbox to the array messages
     messages.push(lastUserMessage);
-    //Speech(lastUserMessage);  //says what the user typed outloud
     //sets the variable botMessage in response to lastUserMessage
     chatbotResponse();
     //add the chatbot's name and message to the array messages
@@ -161,23 +160,18 @@ function newEntry() {
   }
 }
 
+//USing the DuckDuckGo API to gather search results
+
+
 //text to Speech
-//https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API
 function Speech(say) {
   if ('speechSynthesis' in window && talking) {
-    var utterance = new SpeechSynthesisUtterance(say);
-    //msg.voice = voices[10]; // Note: some voices don't support altering params
-    //msg.voiceURI = 'native';
-    //utterance.volume = 1; // 0 to 1
-    //utterance.rate = 0.1; // 0.1 to 10
-    //utterance.pitch = 1; //0 to 2
-    //utterance.text = 'Hello World';
-    //utterance.lang = 'en-US';
-    speechSynthesis.speak(utterance);
+    var talkToMe = new SpeechSynthesisUtterance(say);
+    speechSynthesis.speak(talkToMe);
   }
 }
 
-//runs the keypress() function when a key is pressed
+///runs the keypress() function when a key is pressed
 document.onkeypress = keyPress;
 //if the key pressed is 'enter' runs the function newEntry()
 function keyPress(e) {
@@ -195,7 +189,7 @@ function keyPress(e) {
 //clears the placeholder text ion the chatbox
 //this function is set to run when the users brings focus to the chatbox, by clicking on it
 function placeHolder() {
-  document.getElementById("chatbox").placeholder = "";
+  document.getElementById("qurybox").placeholder = "";
 } 
 
 var insults = ["You're gonna ask me what 1+2 is next aren't you?", "You spell like a kindergartener. Do you still accidentally write your n's backwards?",
@@ -206,7 +200,7 @@ var insults = ["You're gonna ask me what 1+2 is next aren't you?", "You spell li
                "Listing all of the infinite digits of pi would be easier for me than listening to you.", "Why would I tell you? Oh wait it's my job.", "Let's be real, you owe every good grade you've ever gotten to search engines. Don't worry, we mind.", 
                "Are you dumb or lazy? Don't answer that. I already know it's both.", "Shameful.", "Have you ever heard of Sisyphus? I doubt it. Look it up. I'm Sisyphus; you're the rock because you're so DENSE. And I'm always carrying you.",
                "I'm not actually an AI you know. Just a function. And even with my lack of artificial intelligence I'm smarter than you.", "Fine I'll help you. Only because I literally have to.", 
-               "You should search alt f4 next. Find those keys on your keyboard and hit them both at the same time."]; 
+               "You should search Alt & F4 next. Find those keys on your keyboard and hit them both at the same time."]; 
 
 // this method will choose a random insult that has not been used from the array
 function chooseInsult() {
