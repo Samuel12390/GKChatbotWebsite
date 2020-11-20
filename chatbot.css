@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
 body {
     font: 15px arial, sans-serif;
     background-color: #d9d9d9;
@@ -52,6 +56,17 @@ body {
   }
   
   h1 {
+    font: 40px 'Press Start 2P', monospace;
+    margin: auto;
+  }
+
+  h3 {
+    font: 30px 'Press Start 2P', monospace;
+    margin: auto;
+  }
+
+  p {
+    font: 20px 'VT323', monospace;
     margin: auto;
   }
   
