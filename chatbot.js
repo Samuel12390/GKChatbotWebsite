@@ -121,6 +121,7 @@ function chatbotResponse() {
   }
 }
 
+//Using the DuckDuckGo API to gather search results
 var b;
 function getanswer(q){
 $.get("https://api.duckduckgo.com/?q="+q+"&format=json", function(a) {
@@ -159,9 +160,6 @@ function newEntry() {
     }
   }
 }
-
-//USing the DuckDuckGo API to gather search results
-
 
 //text to Speech
 function Speech(say) {
