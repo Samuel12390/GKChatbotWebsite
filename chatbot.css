@@ -23,7 +23,7 @@ body {
   #chatborder {
     border-style: solid;
     background-color: #f6f9f6;
-    border-width: 10px;
+    border-width: 7px;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
@@ -44,12 +44,14 @@ body {
     height: 22px;
     width: 100%;
   }
+
+  #qurybox { 
+    font: 17px arial, sans-serif;
+    height: 22px;
+    width: 100%;
+  }
   
   h1 {
     margin: auto;
   }
   
-  pre {
-    background-color: #f0f0f0;
-    margin-left: 20px;
-  }
