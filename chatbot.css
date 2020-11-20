@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Geo&subset=latin);
+
 
 
 body {
@@ -50,7 +52,7 @@ body {
   }
 
   #qurybox { 
-    font: 17px arial, sans-serif;
+    font: 17px 'VT323', monospace;
     height: 22px;
     width: 100%;
   }
@@ -60,13 +62,24 @@ body {
     margin: auto;
   }
 
+  h2 {
+    font: 30px 'VT323', monospace;
+    font-weight: 1000;
+    margin: auto;
+  }
+
   h3 {
     font: 30px 'Press Start 2P', monospace;
     margin: auto;
   }
 
   p {
-    font: 20px 'VT323', monospace;
+    font: 25px 'VT323', monospace;
     margin: auto;
+  }
+
+  li { 
+    font-family: 'Geo', serif;
+    font-size: 20px;
   }
   
